@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_list/controllers/view_form_controller.dart';
+import 'package:todo_list/app/controllers/view_form_controller.dart';
 
 class FormView extends StatefulWidget {
   const FormView({Key? key}) : super(key: key);
@@ -93,7 +93,7 @@ class _FormViewState extends State<FormView> {
             const SizedBox(height: 20),
             Text(
               validate == false ? '' : 'preencha todos os capos',
-              // style: const TextStyle(color: Colors.red),
+              style: const TextStyle(color: Colors.red),
             ),
             TextButton.icon(
               onPressed: () {
@@ -101,8 +101,14 @@ class _FormViewState extends State<FormView> {
                     date.isNotEmpty &&
                     description.isNotEmpty) {
                   var id = ViewFormController.instance.todo.length;
-                  ViewFormController.instance.changeTodo({'id': id.toString(), 'title': title, 'data': date, 'description': description});
-                  Navigator.of(context).popAndPushNamed('/');
+                  ViewFormController.instance.changeTodo({
+                    'id': id.toString(),
+                    'title': title,
+                    'data': date,
+                    'description': description,
+                    'verified': false
+                  });
+                  Navigator.pop(context);
                 } else {
                   setState(() {
                     validate = true;

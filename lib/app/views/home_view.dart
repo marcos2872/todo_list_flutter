@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:todo_list/controllers/view_form_controller.dart';
+import 'package:todo_list/app/controllers/view_form_controller.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -27,14 +26,30 @@ class HomeView extends StatelessWidget {
                     ? 1
                     : ViewFormController.instance.todo.length,
                 itemBuilder: (context, index) {
-                  return Container(
-                    height: 50,
-                    alignment: Alignment.center,
-                    child: Text(ViewFormController.instance.todo.isEmpty
-                        ? 'Nenhuma nota existente'
-                        : ViewFormController.instance.todo[0]['title']
-                            as String),
-                  );
+                  return ViewFormController.instance.todo.isEmpty
+                      ? const Text('Nenhuma nota existente')
+                      : Row(children: [
+                          Expanded(
+                            flex: 5,
+                            child: Text(ViewFormController.instance.todo[index]
+                                ['title'] as String),
+                          ),
+                          Expanded(
+                              flex: 1,
+                              child: IconButton(
+                                onPressed: () {
+                                  ViewFormController.instance.changeVerified(
+                                      ViewFormController.instance.todo[index]['id']);
+                                },
+                                icon: Icon(
+                                  Icons.verified,
+                                  color: ViewFormController.instance.todo[index]
+                                          ['verified']
+                                      ? Colors.green
+                                      : Colors.red,
+                                ),
+                              ))
+                        ]);
                 },
                 separatorBuilder: (context, index) => const Divider(),
               )),
