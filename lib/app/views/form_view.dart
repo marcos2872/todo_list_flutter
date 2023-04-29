@@ -1,3 +1,4 @@
+import 'package:datepicker_dropdown/datepicker_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:todo_list/app/controllers/view_form_controller.dart';
 
@@ -11,7 +12,7 @@ class FormView extends StatefulWidget {
 class _FormViewState extends State<FormView> {
   late String title = '';
   late String description = '';
-  late String date = '';
+  var date = {'day': '', 'month': '', 'year': ''};
   late bool validate = false;
 
   @override
@@ -26,7 +27,7 @@ class _FormViewState extends State<FormView> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(
-              width: MediaQuery.of(context).size.width - 60,
+              width: MediaQuery.of(context).size.width - 10,
               child: TextField(
                 onChanged: (value) {
                   setState(() {
@@ -48,16 +49,10 @@ class _FormViewState extends State<FormView> {
               height: 20,
             ),
             SizedBox(
-              width: MediaQuery.of(context).size.width - 60,
-              child: TextField(
-                keyboardType: TextInputType.datetime,
-                onChanged: (value) {
-                  setState(() {
-                    date = value;
-                  });
-                },
-                decoration: const InputDecoration(
-                  label: Text('data'),
+              width: MediaQuery.of(context).size.width - 10,
+              child: DropdownDatePicker(
+                textStyle: const TextStyle(color: Colors.white),
+                inputDecoration: const InputDecoration(
                   enabledBorder: OutlineInputBorder(
                       borderSide:
                           BorderSide(color: Color.fromARGB(255, 114, 86, 3))),
@@ -65,13 +60,29 @@ class _FormViewState extends State<FormView> {
                       borderSide:
                           BorderSide(color: Color.fromARGB(255, 114, 86, 3))),
                 ),
+                isDropdownHideUnderline: true,
+                isFormValidator: true,
+                startYear: 2023,
+                endYear: 2025,
+                dayFlex: 2,
+                monthFlex: 3,
+                yearFlex: 3,
+                onChangedDay: (value) => setState(() {
+                  date['day'] = value.toString();
+                }),
+                onChangedMonth: (value) => setState(() {
+                  date['month'] = value.toString();
+                }),
+                onChangedYear: (value) => setState(() {
+                  date['year'] = value.toString();
+                }),
               ),
             ),
             const SizedBox(
               height: 20,
             ),
             SizedBox(
-              width: MediaQuery.of(context).size.width - 60,
+              width: MediaQuery.of(context).size.width - 10,
               child: TextField(
                 onChanged: (value) {
                   setState(() {
@@ -104,7 +115,7 @@ class _FormViewState extends State<FormView> {
                   ViewFormController.instance.changeTodo({
                     'id': id.toString(),
                     'title': title,
-                    'data': date,
+                    'date': '${date['day']}/${date['month']}/${date['year']}',
                     'description': description,
                     'verified': false
                   });

@@ -27,19 +27,33 @@ class HomeView extends StatelessWidget {
                     : ViewFormController.instance.todo.length,
                 itemBuilder: (context, index) {
                   return ViewFormController.instance.todo.isEmpty
-                      ? const Text('Nenhuma nota existente')
+                      ? const Center(
+                          child: Text(
+                          'Nenhuma nota existente',
+                          style: TextStyle(fontSize: 20),
+                        ))
                       : Row(children: [
                           Expanded(
                             flex: 5,
-                            child: Text(ViewFormController.instance.todo[index]
-                                ['title'] as String),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(ViewFormController
+                                    .instance.todo[index]['title']
+                                    .toString()),
+                                Text(ViewFormController
+                                    .instance.todo[index]['date']
+                                    .toString())
+                              ],
+                            ),
                           ),
                           Expanded(
                               flex: 1,
                               child: IconButton(
                                 onPressed: () {
                                   ViewFormController.instance.changeVerified(
-                                      ViewFormController.instance.todo[index]['id']);
+                                      ViewFormController.instance.todo[index]
+                                          ['id']);
                                 },
                                 icon: Icon(
                                   Icons.verified,

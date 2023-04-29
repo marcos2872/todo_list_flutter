@@ -14,7 +14,7 @@ class ViewFormController extends ChangeNotifier {
     var newTodo = [];
     todo.forEach((e) {
       if (e['id'] == id) {
-        return newTodo.add({...e, 'verified': !e['verified']});
+        return newTodo.add({...e, 'verified': true});
       }
       return newTodo.add(e);
     });
