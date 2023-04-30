@@ -6,7 +6,9 @@ class ViewFormController extends ChangeNotifier {
   List todo = [];
 
   changeTodo(obj) {
-    todo.add(obj);
+    var newTodo = [...todo, obj];
+    todo.clear();
+    todo.addAll(newTodo.reversed);
     notifyListeners();
   }
 
@@ -17,6 +19,19 @@ class ViewFormController extends ChangeNotifier {
         return newTodo.add({...e, 'verified': true});
       }
       return newTodo.add(e);
+    });
+    todo.clear();
+    todo.addAll(newTodo);
+    notifyListeners();
+  }
+
+  deletById(id) {
+    var newTodo = [];
+    todo.forEach((curr) {
+      if (curr['id'] != id) {
+        return newTodo.add(curr);
+      }
+      return;
     });
     todo.clear();
     todo.addAll(newTodo);

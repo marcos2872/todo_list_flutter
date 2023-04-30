@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_list/app/components/cards.dart';
 import 'package:todo_list/app/controllers/view_form_controller.dart';
 
 class HomeView extends StatelessWidget {
@@ -32,38 +33,7 @@ class HomeView extends StatelessWidget {
                           'Nenhuma nota existente',
                           style: TextStyle(fontSize: 20),
                         ))
-                      : Row(children: [
-                          Expanded(
-                            flex: 5,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(ViewFormController
-                                    .instance.todo[index]['title']
-                                    .toString()),
-                                Text(ViewFormController
-                                    .instance.todo[index]['date']
-                                    .toString())
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                              flex: 1,
-                              child: IconButton(
-                                onPressed: () {
-                                  ViewFormController.instance.changeVerified(
-                                      ViewFormController.instance.todo[index]
-                                          ['id']);
-                                },
-                                icon: Icon(
-                                  Icons.verified,
-                                  color: ViewFormController.instance.todo[index]
-                                          ['verified']
-                                      ? Colors.green
-                                      : Colors.red,
-                                ),
-                              ))
-                        ]);
+                      : Cards(index: index);
                 },
                 separatorBuilder: (context, index) => const Divider(),
               )),
